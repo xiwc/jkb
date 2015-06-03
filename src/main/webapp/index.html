@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>welcome!</title>
+<script type="text/javascript"
+	src="resources/js/lib/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="resources/js/lib/json2.js"></script>
+<script type="text/javascript"
+	src="resources/js/lib/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="test/js/index-test.js"></script>
+</head>
+<body>
+	<a href="test/home.do" target="_blank">test/home.do</a>
+
+	<hr />
+
+	<div action-url="alarm/paging.do">
+
+		<div class="io" style="display: none">
+			<div>输入:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="input" style="width: 100%; height: 200px;">
+{
+	"start" : 0,
+	"limit" : 50,
+	"params" : {
+		"startTime" : "2010/01/01 00:00:00",
+		"endTime" : "2014/02/28 23:59:00",
+		"monitoringType" : "agent",
+		"level" : "2,3,4,5",
+		"keyword" : "All",
+		"description" : "Allmoni agent"
+	}
+}
+			</textarea>
+			</div>
+			<div>输出:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="output" style="width: 100%; height: 100px;"
+					readonly="readonly"></textarea>
+			</div>
+		</div>
+		<a class="switch" href="#">折叠切换</a>
+		<button></button>
+	</div>
+
+	<hr />
+
+	<div action-url="server/add.do">
+
+		<div class="io" style="display: none">
+			<div>输入:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="input" style="width: 100%; height: 200px;">
+{
+	"params" : {
+		"id" : "1",
+		"name" : "主机001",
+		"ip" : "192.168.0.1",
+		"typeId" : "21"
+	}
+}
+			</textarea>
+			</div>
+			<div>输出:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="output" style="width: 100%; height: 100px;"
+					readonly="readonly"></textarea>
+			</div>
+		</div>
+		<a class="switch" href="#">折叠切换</a>
+		<button></button>
+	</div>
+
+	<hr />
+
+
+	<div action-url="server/update.do">
+
+		<div class="io" style="display: none">
+			<div>输入:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="input" style="width: 100%; height: 200px;">
+{
+	"params" : {
+		"id" : "1",
+		"name" : "主机001",
+		"ip" : "192.168.0.1",
+		"typeId" : "21"
+	}
+}
+			</textarea>
+			</div>
+			<div>输出:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="output" style="width: 100%; height: 100px;"
+					readonly="readonly"></textarea>
+			</div>
+		</div>
+		<a class="switch" href="#">折叠切换</a>
+		<button></button>
+	</div>
+
+	<hr />
+
+
+	<div action-url="server/delete.do">
+
+		<div class="io" style="display: none">
+			<div>输入:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="input" style="width: 100%; height: 200px;">
+{
+	"params" : {
+		"id" : "1"
+	}
+}
+			</textarea>
+			</div>
+			<div>输出:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="output" style="width: 100%; height: 100px;"
+					readonly="readonly"></textarea>
+			</div>
+		</div>
+		<a class="switch" href="#">折叠切换</a>
+		<button></button>
+	</div>
+
+	<hr />
+
+
+	<div action-url="server/getRT.do">
+
+		<div class="io" style="display: none">
+			<div>输入:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="input" style="width: 100%; height: 200px;">
+{
+	"params" : {
+		"id" : "1"
+	}
+}
+			</textarea>
+			</div>
+			<div>输出:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="output" style="width: 100%; height: 100px;"
+					readonly="readonly"></textarea>
+			</div>
+		</div>
+		<a class="switch" href="#">折叠切换</a>
+		<button></button>
+	</div>
+
+	<hr />
+
+	<div action-url="server/getItems.do">
+
+		<div class="io" style="display: none">
+			<div>输入:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="input" style="width: 100%; height: 200px;">
+{
+	"params" : {
+		"id" : "1"
+	}
+}
+			</textarea>
+			</div>
+			<div>输出:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="output" style="width: 100%; height: 100px;"
+					readonly="readonly"></textarea>
+			</div>
+		</div>
+		<a class="switch" href="#">折叠切换</a>
+		<button></button>
+	</div>
+
+	<hr />
+	
+	<div action-url="server/getHistory.do">
+
+		<div class="io" style="display: none">
+			<div>输入:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="input" style="width: 100%; height: 200px;">
+{
+	"params" : {
+		"itemId" : "125169"
+	}
+}
+			</textarea>
+			</div>
+			<div>输出:</div>
+			<div style="border-bottom-width: 1px;">
+				<textarea class="output" style="width: 100%; height: 100px;"
+					readonly="readonly"></textarea>
+			</div>
+		</div>
+		<a class="switch" href="#">折叠切换</a>
+		<button></button>
+	</div>
+
+	<hr />
+</body>
+</html>

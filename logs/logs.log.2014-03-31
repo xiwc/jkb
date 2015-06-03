@@ -1,0 +1,3848 @@
+[INFO] [2014-03-31 16:56:29,035] [org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean] [localhost-startStop-1] [0]
+Building new Hibernate SessionFactory
+
+[INFO] [2014-03-31 16:56:38,432] [org.springframework.orm.hibernate3.HibernateTransactionManager] [localhost-startStop-1] [9397]
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@74fcf2a3] of Hibernate SessionFactory for HibernateTransactionManager
+
+[INFO] [2014-03-31 17:12:52,075] [org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean] [localhost-startStop-1] [0]
+Building new Hibernate SessionFactory
+
+[INFO] [2014-03-31 17:13:40,030] [org.springframework.orm.hibernate3.HibernateTransactionManager] [localhost-startStop-1] [47955]
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@534bbab8] of Hibernate SessionFactory for HibernateTransactionManager
+
+[DEBUG] [2014-03-31 17:18:23,175] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [331100]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:18:23,372] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [331297]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:18:23,697] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [331622]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "4f3ac9743469c0b57d98e112c131267b",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:18:23,773] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [331698]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:18:23,852] [com.skycloud.jkb.controller.AlarmController] [http-bio-8080-exec-9] [331777]
+查询【告警】
+
+[DEBUG] [2014-03-31 17:18:23,906] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [331831]
+请求参数对象[getParam]:
+{
+  "startTime": "2010/01/01 00:00:00",
+  "endTime": "2014/02/28 23:59:00",
+  "monitoringType": "agent",
+  "level": "2,3,4,5",
+  "keyword": "All",
+  "description": "Allmoni agent"
+}
+
+[DEBUG] [2014-03-31 17:18:23,983] [com.skycloud.jkb.service.impl.AlarmServiceImpl] [http-bio-8080-exec-9] [331908]
+[业务逻辑层]查询【告警】(分页)
+
+[DEBUG] [2014-03-31 17:18:23,989] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-9] [331914]
+
+    SELECT
+        COUNT(*) 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' 
+
+[DEBUG] [2014-03-31 17:18:23,989] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-9] [331914]
+
+
+[DEBUG] [2014-03-31 17:18:24,022] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-9] [331947]
+获取对象[getObject]单个值: 1
+
+[DEBUG] [2014-03-31 17:18:24,024] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-9] [331949]
+
+    SELECT
+        `triggers`.triggerid,
+        `triggers`.description,
+        `triggers`.priority,
+        `triggers`.lastchange,
+        `triggers`.type,
+        `triggers`.value_flags,
+        `triggers`.flags,
+        `hosts`.`host`,
+        `hosts`.`name`,
+        sg.monitortype 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' LIMIT 0, 50 
+
+[DEBUG] [2014-03-31 17:18:24,024] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-9] [331949]
+
+
+[DEBUG] [2014-03-31 17:18:24,056] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-9] [331981]
+多行[getMapList]数据:
+[
+  {
+    "host": "AllMoniDB",
+    "flags": 0,
+    "triggerid": 23863,
+    "priority": 3,
+    "description": "Allmoni agent失去连接超过5分钟",
+    "monitortype": "agent",
+    "name": "AllMoniDB",
+    "type": 0,
+    "lastchange": 1379831670,
+    "value_flags": 1
+  }
+]
+
+[DEBUG] [2014-03-31 17:18:27,051] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [334976]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "4f3ac9743469c0b57d98e112c131267b",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:18:27,064] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [334989]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:18:27,695] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [335620]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "710e50f8789e63f4b1acf8023a3c1e0f",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:18:27,700] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [335625]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:18:27,703] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-10] [335628]
+添加【服务器】
+
+[DEBUG] [2014-03-31 17:18:27,832] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [335757]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机001",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:18:27,836] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-10] [335761]
+[业务逻辑层]添加【服务器】
+
+[DEBUG] [2014-03-31 17:18:27,845] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [335770]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "groups": [
+      {
+        "groupid": "18"
+      }
+    ],
+    "interfaces": [
+      {
+        "dns": "",
+        "ip": "192.168.0.1",
+        "main": 1,
+        "port": "8050",
+        "type": 1,
+        "useip": 1
+      }
+    ],
+    "templates": [
+      {
+        "templateid": "10661"
+      }
+    ],
+    "host": "chazuo_1",
+    "available": 1,
+    "disable_until": "0",
+    "errors_from": "0",
+    "ipmi_authtype": 0,
+    "ipmi_available": 0,
+    "ipmi_disable_until": "0",
+    "ipmi_errors_from": "0",
+    "ipmi_privilege": 2,
+    "jmx_available": 0,
+    "jmx_disable_until": "0",
+    "jmx_errors_from": "0",
+    "maintenance_from": "0",
+    "maintenance_status": 0,
+    "maintenance_type": 0,
+    "name": "主机001",
+    "snmp_available": 0,
+    "snmp_disable_until": "0",
+    "snmp_errors_from": "0",
+    "status": 0
+  },
+  "jsonrpc": "2.0",
+  "method": "host.create",
+  "auth": "710e50f8789e63f4b1acf8023a3c1e0f",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:18:27,851] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [335776]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:18:28,114] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [336039]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32602,
+    "message": "Invalid params.",
+    "data": "Host with the same name \"chazuo_1\" already exists.",
+    "debug": [
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1410,
+        "function": "exception",
+        "class": "CZBXAPI",
+        "type": "::",
+        "args": [
+          100,
+          "Host with the same name \"chazuo_1\" already exists."
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1465,
+        "function": "checkInput",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          [
+            {
+              "groups": [
+                {
+                  "groupid": "18"
+                }
+              ],
+              "interfaces": [
+                {
+                  "dns": "",
+                  "ip": "192.168.0.1",
+                  "main": 1,
+                  "port": "8050",
+                  "type": 1,
+                  "useip": 1
+                }
+              ],
+              "templates": [
+                {
+                  "templateid": "10661"
+                }
+              ],
+              "host": "chazuo_1",
+              "available": 1,
+              "disable_until": "0",
+              "errors_from": "0",
+              "ipmi_authtype": 0,
+              "ipmi_available": 0,
+              "ipmi_disable_until": "0",
+              "ipmi_errors_from": "0",
+              "ipmi_privilege": 2,
+              "jmx_available": 0,
+              "jmx_disable_until": "0",
+              "jmx_errors_from": "0",
+              "maintenance_from": "0",
+              "maintenance_status": 0,
+              "maintenance_type": 0,
+              "name": "主机001",
+              "snmp_available": 0,
+              "snmp_disable_until": "0",
+              "snmp_errors_from": "0",
+              "status": 0
+            }
+          ],
+          "create"
+        ]
+      },
+      {
+        "function": "create",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          {
+            "groups": [
+              {
+                "groupid": "18"
+              }
+            ],
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "templates": [
+              {
+                "templateid": "10661"
+              }
+            ],
+            "host": "chazuo_1",
+            "available": 1,
+            "disable_until": "0",
+            "errors_from": "0",
+            "ipmi_authtype": 0,
+            "ipmi_available": 0,
+            "ipmi_disable_until": "0",
+            "ipmi_errors_from": "0",
+            "ipmi_privilege": 2,
+            "jmx_available": 0,
+            "jmx_disable_until": "0",
+            "jmx_errors_from": "0",
+            "maintenance_from": "0",
+            "maintenance_status": 0,
+            "maintenance_type": 0,
+            "name": "主机001",
+            "snmp_available": 0,
+            "snmp_disable_until": "0",
+            "snmp_errors_from": "0",
+            "status": 0
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 120,
+        "function": "call_user_func",
+        "args": [
+          [
+            {},
+            "create"
+          ],
+          {
+            "groups": [
+              {
+                "groupid": "18"
+              }
+            ],
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "templates": [
+              {
+                "templateid": "10661"
+              }
+            ],
+            "host": "chazuo_1",
+            "available": 1,
+            "disable_until": "0",
+            "errors_from": "0",
+            "ipmi_authtype": 0,
+            "ipmi_available": 0,
+            "ipmi_disable_until": "0",
+            "ipmi_errors_from": "0",
+            "ipmi_privilege": 2,
+            "jmx_available": 0,
+            "jmx_disable_until": "0",
+            "jmx_errors_from": "0",
+            "maintenance_from": "0",
+            "maintenance_status": 0,
+            "maintenance_type": 0,
+            "name": "主机001",
+            "snmp_available": 0,
+            "snmp_disable_until": "0",
+            "snmp_errors_from": "0",
+            "status": 0
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 72,
+        "function": "callAPI",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.create",
+          {
+            "groups": [
+              {
+                "groupid": "18"
+              }
+            ],
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "templates": [
+              {
+                "templateid": "10661"
+              }
+            ],
+            "host": "chazuo_1",
+            "available": 1,
+            "disable_until": "0",
+            "errors_from": "0",
+            "ipmi_authtype": 0,
+            "ipmi_available": 0,
+            "ipmi_disable_until": "0",
+            "ipmi_errors_from": "0",
+            "ipmi_privilege": 2,
+            "jmx_available": 0,
+            "jmx_disable_until": "0",
+            "jmx_errors_from": "0",
+            "maintenance_from": "0",
+            "maintenance_status": 0,
+            "maintenance_type": 0,
+            "name": "主机001",
+            "snmp_available": 0,
+            "snmp_disable_until": "0",
+            "snmp_errors_from": "0",
+            "status": 0
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.cjsonrpc.php",
+        "line": 71,
+        "function": "call",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.create",
+          {
+            "groups": [
+              {
+                "groupid": "18"
+              }
+            ],
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "templates": [
+              {
+                "templateid": "10661"
+              }
+            ],
+            "host": "chazuo_1",
+            "available": 1,
+            "disable_until": "0",
+            "errors_from": "0",
+            "ipmi_authtype": 0,
+            "ipmi_available": 0,
+            "ipmi_disable_until": "0",
+            "ipmi_errors_from": "0",
+            "ipmi_privilege": 2,
+            "jmx_available": 0,
+            "jmx_disable_until": "0",
+            "jmx_errors_from": "0",
+            "maintenance_from": "0",
+            "maintenance_status": 0,
+            "maintenance_type": 0,
+            "name": "主机001",
+            "snmp_available": 0,
+            "snmp_disable_until": "0",
+            "snmp_errors_from": "0",
+            "status": 0
+          },
+          "710e50f8789e63f4b1acf8023a3c1e0f"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api_jsonrpc.php",
+        "line": 54,
+        "function": "execute",
+        "class": "CJSONrpc",
+        "type": "->",
+        "args": []
+      }
+    ]
+  },
+  "id": 1
+}
+
+[ERROR] [2014-03-31 17:18:28,159] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [336084]
+[server]数据保存失败!
+
+com.skycloud.jkb.base.ex.ServiceRuntimeException: [server]数据保存失败!
+	at com.skycloud.jkb.base.impl.BaseServiceImpl.throwRuntimeExceptionWhenTrue(BaseServiceImpl.java:94)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.saveHostBasicInfo(ServerServiceImpl.java:262)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.save(ServerServiceImpl.java:97)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy63.save(Unknown Source)
+	at com.skycloud.jkb.controller.ServerController.add(ServerController.java:89)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[DEBUG] [2014-03-31 17:18:45,940] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [353865]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "710e50f8789e63f4b1acf8023a3c1e0f",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:18:45,951] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [353876]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:18:46,203] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [354128]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "811c963d00b0b4df5f407f5a12967368",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:18:46,204] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [354129]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:18:46,206] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-10] [354131]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:18:46,209] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [354134]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机002",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:18:46,225] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-10] [354150]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:18:46,339] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-10] [354264]
+获取的host不存在!
+
+[ERROR] [2014-03-31 17:18:46,378] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [354303]
+
+
+java.lang.NullPointerException
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[DEBUG] [2014-03-31 17:19:47,576] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [415501]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "811c963d00b0b4df5f407f5a12967368",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:19:47,588] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [415513]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:19:48,068] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [415993]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "923d00bd81ff7cdf87b2cbaca9451d1d",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:19:48,070] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [415995]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:19:48,072] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-2] [415997]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:19:48,074] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [415999]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机003",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:19:48,096] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-2] [416021]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:19:48,157] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-2] [416082]
+获取的host不存在!
+
+[ERROR] [2014-03-31 17:19:48,185] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [416110]
+
+
+java.lang.NullPointerException
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:310)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[INFO] [2014-03-31 17:31:27,738] [org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean] [localhost-startStop-1] [0]
+Building new Hibernate SessionFactory
+
+[INFO] [2014-03-31 17:31:42,864] [org.springframework.orm.hibernate3.HibernateTransactionManager] [localhost-startStop-1] [15126]
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@648ec4f0] of Hibernate SessionFactory for HibernateTransactionManager
+
+[DEBUG] [2014-03-31 17:32:14,674] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [46936]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:32:14,861] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [47123]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:32:15,182] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [47444]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "214fb591406fe844b919012cab3a01c1",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:32:15,307] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [47569]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:32:15,384] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-9] [47646]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:32:15,545] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [47807]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机003",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:32:15,602] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-9] [47864]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:32:15,923] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-9] [48185]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 17:32:15,939] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [48201]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "interfaces": [
+      {
+        "ip": "192.168.0.1"
+      }
+    ],
+    "hostid": "10970",
+    "host": "null_主机003_404f3fbb-d8ae-415e-93ab-01af2c5ac4f8",
+    "name": "主机003"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "214fb591406fe844b919012cab3a01c1",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:32:15,944] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [48206]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:32:16,260] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [48522]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32500,
+    "message": "Application error.",
+    "data": "Unknown interface type.",
+    "debug": [
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 1007,
+        "function": "hostInterfaceTypeNumToName",
+        "args": [
+          ""
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 883,
+        "function": "checkMainInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            {
+              "ip": "192.168.0.1",
+              "hostid": "10970"
+            }
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 755,
+        "function": "checkHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            {
+              "ip": "192.168.0.1"
+            }
+          ],
+          "10970"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1547,
+        "function": "replaceHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1"
+              }
+            ],
+            "hostid": "10970",
+            "host": "null_主机003_404f3fbb-d8ae-415e-93ab-01af2c5ac4f8",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "function": "update",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1"
+              }
+            ],
+            "hostid": "10970",
+            "host": "null_主机003_404f3fbb-d8ae-415e-93ab-01af2c5ac4f8",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 120,
+        "function": "call_user_func",
+        "args": [
+          [
+            {},
+            "update"
+          ],
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1"
+              }
+            ],
+            "hostid": "10970",
+            "host": "null_主机003_404f3fbb-d8ae-415e-93ab-01af2c5ac4f8",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 72,
+        "function": "callAPI",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1"
+              }
+            ],
+            "hostid": "10970",
+            "host": "null_主机003_404f3fbb-d8ae-415e-93ab-01af2c5ac4f8",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.cjsonrpc.php",
+        "line": 71,
+        "function": "call",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1"
+              }
+            ],
+            "hostid": "10970",
+            "host": "null_主机003_404f3fbb-d8ae-415e-93ab-01af2c5ac4f8",
+            "name": "主机003"
+          },
+          "214fb591406fe844b919012cab3a01c1"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api_jsonrpc.php",
+        "line": 54,
+        "function": "execute",
+        "class": "CJSONrpc",
+        "type": "->",
+        "args": []
+      }
+    ]
+  },
+  "id": 1
+}
+
+[ERROR] [2014-03-31 17:32:16,311] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [48573]
+Unknown interface type.
+
+com.skycloud.jkb.base.ex.ServiceRuntimeException: Unknown interface type.
+	at com.skycloud.jkb.base.impl.BaseServiceImpl.throwRuntimeExceptionWhenTrue(BaseServiceImpl.java:94)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.update(ServerServiceImpl.java:367)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy63.update(Unknown Source)
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[INFO] [2014-03-31 17:38:39,203] [org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean] [localhost-startStop-1] [0]
+Building new Hibernate SessionFactory
+
+[INFO] [2014-03-31 17:38:51,369] [org.springframework.orm.hibernate3.HibernateTransactionManager] [localhost-startStop-1] [12166]
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@78f6a3e7] of Hibernate SessionFactory for HibernateTransactionManager
+
+[DEBUG] [2014-03-31 17:39:04,179] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-7] [24976]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:39:04,400] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-7] [25197]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:39:04,715] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-7] [25512]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "aba6bdfb2d8902a611ecf67b4fb56849",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:39:04,795] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-7] [25592]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:39:04,925] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-7] [25722]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:39:05,088] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-7] [25885]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机003",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:39:05,150] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-7] [25947]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:39:05,436] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-7] [26233]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 17:39:05,447] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-7] [26244]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "interfaces": [
+      {
+        "ip": "192.168.0.1",
+        "type": 1
+      }
+    ],
+    "hostid": "10970",
+    "host": "chazuo_1",
+    "name": "主机003"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "aba6bdfb2d8902a611ecf67b4fb56849",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:39:05,454] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-7] [26251]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:39:05,682] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-7] [26479]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32602,
+    "message": "Invalid params.",
+    "data": "No default interface for \"agent\" type on \"主机001\".",
+    "debug": [
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 1007,
+        "function": "exception",
+        "class": "CZBXAPI",
+        "type": "::",
+        "args": [
+          100,
+          "No default interface for \"agent\" type on \"主机001\"."
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 883,
+        "function": "checkMainInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            {
+              "ip": "192.168.0.1",
+              "type": 1,
+              "hostid": "10970"
+            }
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 755,
+        "function": "checkHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            {
+              "ip": "192.168.0.1",
+              "type": 1
+            }
+          ],
+          "10970"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1547,
+        "function": "replaceHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "type": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "function": "update",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "type": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 120,
+        "function": "call_user_func",
+        "args": [
+          [
+            {},
+            "update"
+          ],
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "type": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 72,
+        "function": "callAPI",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "type": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.cjsonrpc.php",
+        "line": 71,
+        "function": "call",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "type": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          },
+          "aba6bdfb2d8902a611ecf67b4fb56849"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api_jsonrpc.php",
+        "line": 54,
+        "function": "execute",
+        "class": "CJSONrpc",
+        "type": "->",
+        "args": []
+      }
+    ]
+  },
+  "id": 1
+}
+
+[ERROR] [2014-03-31 17:39:05,701] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-7] [26498]
+No default interface for "agent" type on "主机001".
+
+com.skycloud.jkb.base.ex.ServiceRuntimeException: No default interface for "agent" type on "主机001".
+	at com.skycloud.jkb.base.impl.BaseServiceImpl.throwRuntimeExceptionWhenTrue(BaseServiceImpl.java:94)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.update(ServerServiceImpl.java:365)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy63.update(Unknown Source)
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[INFO] [2014-03-31 17:49:50,620] [org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean] [localhost-startStop-1] [0]
+Building new Hibernate SessionFactory
+
+[INFO] [2014-03-31 17:50:00,711] [org.springframework.orm.hibernate3.HibernateTransactionManager] [localhost-startStop-1] [10091]
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@771ed265] of Hibernate SessionFactory for HibernateTransactionManager
+
+[DEBUG] [2014-03-31 17:50:06,360] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [15740]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:50:06,561] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [15941]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:50:06,892] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [16272]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "da82df2a9dc670aaeee96ed333e01752",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:50:06,966] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [16346]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:50:07,048] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-9] [16428]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:50:07,238] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [16618]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机003",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:50:07,305] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-9] [16685]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:50:07,610] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-9] [16990]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 17:50:07,621] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [17001]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "interfaces": [
+      {
+        "ip": "192.168.0.1",
+        "main": 1,
+        "type": 1,
+        "useip": 1
+      }
+    ],
+    "hostid": "10970",
+    "host": "chazuo_1",
+    "name": "主机003"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "da82df2a9dc670aaeee96ed333e01752",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:50:07,627] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [17007]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:50:07,921] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-9] [17301]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32602,
+    "message": "Invalid params.",
+    "data": "Incorrect arguments passed to function.",
+    "debug": [
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 506,
+        "function": "exception",
+        "class": "CZBXAPI",
+        "type": "::",
+        "args": [
+          100,
+          "Incorrect arguments passed to function."
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 791,
+        "function": "checkInput",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            {
+              "ip": "192.168.0.1",
+              "main": 1,
+              "type": 1,
+              "useip": 1,
+              "hostid": "10970"
+            }
+          ],
+          "create"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1547,
+        "function": "replaceHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "main": 1,
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "function": "update",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "main": 1,
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 120,
+        "function": "call_user_func",
+        "args": [
+          [
+            {},
+            "update"
+          ],
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "main": 1,
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 72,
+        "function": "callAPI",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "main": 1,
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.cjsonrpc.php",
+        "line": 71,
+        "function": "call",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "ip": "192.168.0.1",
+                "main": 1,
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          },
+          "da82df2a9dc670aaeee96ed333e01752"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api_jsonrpc.php",
+        "line": 54,
+        "function": "execute",
+        "class": "CJSONrpc",
+        "type": "->",
+        "args": []
+      }
+    ]
+  },
+  "id": 1
+}
+
+[ERROR] [2014-03-31 17:50:07,960] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-9] [17340]
+Incorrect arguments passed to function.
+
+com.skycloud.jkb.base.ex.ServiceRuntimeException: Incorrect arguments passed to function.
+	at com.skycloud.jkb.base.impl.BaseServiceImpl.throwRuntimeExceptionWhenTrue(BaseServiceImpl.java:94)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.update(ServerServiceImpl.java:367)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy63.update(Unknown Source)
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[INFO] [2014-03-31 17:52:44,913] [org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean] [localhost-startStop-1] [0]
+Building new Hibernate SessionFactory
+
+[INFO] [2014-03-31 17:53:03,277] [org.springframework.orm.hibernate3.HibernateTransactionManager] [localhost-startStop-1] [18364]
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@799e63d5] of Hibernate SessionFactory for HibernateTransactionManager
+
+[DEBUG] [2014-03-31 17:53:16,035] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [31122]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:53:16,229] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [31316]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:53:16,577] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [31664]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "038b71c4c1a207f0ff289c38266cf951",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:53:16,655] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [31742]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:53:16,735] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-10] [31822]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:53:16,890] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [31977]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机003",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:53:16,950] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-10] [32037]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:53:17,240] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-10] [32327]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 17:53:17,253] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [32340]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "interfaces": [
+      {
+        "dns": "",
+        "ip": "192.168.0.1",
+        "main": 1,
+        "port": "8050",
+        "type": 1,
+        "useip": 1
+      }
+    ],
+    "hostid": "10970",
+    "host": "chazuo_1",
+    "name": "主机003"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "038b71c4c1a207f0ff289c38266cf951",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:53:17,262] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [32349]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:53:17,747] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [32834]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32602,
+    "message": "Invalid params.",
+    "data": "Interface is linked to item \"正运行的allmoni_agentd的主机名\" on \"主机001\".",
+    "debug": [
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 1029,
+        "function": "exception",
+        "class": "CZBXAPI",
+        "type": "::",
+        "args": [
+          100,
+          "Interface is linked to item \"正运行的allmoni_agentd的主机名\" on \"主机001\"."
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 948,
+        "function": "checkIfInterfaceHasItems",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 663,
+        "function": "checkMainInterfacesOnDelete",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 796,
+        "function": "delete",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1547,
+        "function": "replaceHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "function": "update",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 120,
+        "function": "call_user_func",
+        "args": [
+          [
+            {},
+            "update"
+          ],
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 72,
+        "function": "callAPI",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.cjsonrpc.php",
+        "line": 71,
+        "function": "call",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          },
+          "038b71c4c1a207f0ff289c38266cf951"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api_jsonrpc.php",
+        "line": 54,
+        "function": "execute",
+        "class": "CJSONrpc",
+        "type": "->",
+        "args": []
+      }
+    ]
+  },
+  "id": 1
+}
+
+[ERROR] [2014-03-31 17:53:17,772] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [32859]
+Interface is linked to item "正运行的allmoni_agentd的主机名" on "主机001".
+
+com.skycloud.jkb.base.ex.ServiceRuntimeException: Interface is linked to item "正运行的allmoni_agentd的主机名" on "主机001".
+	at com.skycloud.jkb.base.impl.BaseServiceImpl.throwRuntimeExceptionWhenTrue(BaseServiceImpl.java:94)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.update(ServerServiceImpl.java:370)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy63.update(Unknown Source)
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[DEBUG] [2014-03-31 17:54:12,927] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [88014]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "038b71c4c1a207f0ff289c38266cf951",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:54:12,934] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [88021]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:54:13,181] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [88268]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "594eb5b91a332726d42f7c9c19ace645",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:54:13,182] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [88269]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:54:13,184] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-10] [88271]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:54:13,186] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [88273]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机003",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:54:13,193] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-10] [88280]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:54:13,233] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-10] [88320]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 17:54:13,233] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [88320]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "interfaces": [
+      {
+        "dns": "",
+        "ip": "192.168.0.1",
+        "main": 1,
+        "port": "8050",
+        "type": 1,
+        "useip": 1
+      }
+    ],
+    "hostid": "10970",
+    "host": "chazuo_1",
+    "name": "主机003"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "594eb5b91a332726d42f7c9c19ace645",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:54:13,240] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [88327]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:54:13,862] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [88949]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32602,
+    "message": "Invalid params.",
+    "data": "Interface is linked to item \"正运行的allmoni_agentd的主机名\" on \"主机001\".",
+    "debug": [
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 1029,
+        "function": "exception",
+        "class": "CZBXAPI",
+        "type": "::",
+        "args": [
+          100,
+          "Interface is linked to item \"正运行的allmoni_agentd的主机名\" on \"主机001\"."
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 948,
+        "function": "checkIfInterfaceHasItems",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 663,
+        "function": "checkMainInterfacesOnDelete",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 796,
+        "function": "delete",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1547,
+        "function": "replaceHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "function": "update",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 120,
+        "function": "call_user_func",
+        "args": [
+          [
+            {},
+            "update"
+          ],
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 72,
+        "function": "callAPI",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.cjsonrpc.php",
+        "line": 71,
+        "function": "call",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970",
+            "host": "chazuo_1",
+            "name": "主机003"
+          },
+          "594eb5b91a332726d42f7c9c19ace645"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api_jsonrpc.php",
+        "line": 54,
+        "function": "execute",
+        "class": "CJSONrpc",
+        "type": "->",
+        "args": []
+      }
+    ]
+  },
+  "id": 1
+}
+
+[ERROR] [2014-03-31 17:54:13,903] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [88990]
+Interface is linked to item "正运行的allmoni_agentd的主机名" on "主机001".
+
+com.skycloud.jkb.base.ex.ServiceRuntimeException: Interface is linked to item "正运行的allmoni_agentd的主机名" on "主机001".
+	at com.skycloud.jkb.base.impl.BaseServiceImpl.throwRuntimeExceptionWhenTrue(BaseServiceImpl.java:94)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.update(ServerServiceImpl.java:370)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy63.update(Unknown Source)
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[DEBUG] [2014-03-31 17:55:39,890] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-1] [174977]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "594eb5b91a332726d42f7c9c19ace645",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:55:39,902] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-1] [174989]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:55:40,179] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-1] [175266]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "b40923f1a38676a9f48616af6de885ec",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:55:40,181] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-1] [175268]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 17:55:40,183] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-1] [175270]
+更新【服务器】
+
+[DEBUG] [2014-03-31 17:55:40,185] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-1] [175272]
+请求参数对象[getParam]:
+{
+  "ip": "192.168.0.1",
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 17:55:40,191] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-1] [175278]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 17:55:40,246] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-1] [175333]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 17:55:40,247] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-1] [175334]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "interfaces": [
+      {
+        "dns": "",
+        "ip": "192.168.0.1",
+        "main": 1,
+        "port": "8050",
+        "type": 1,
+        "useip": 1
+      }
+    ],
+    "hostid": "10970"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "b40923f1a38676a9f48616af6de885ec",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 17:55:40,252] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-1] [175339]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 17:55:40,626] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-1] [175713]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32602,
+    "message": "Invalid params.",
+    "data": "Interface is linked to item \"正运行的allmoni_agentd的主机名\" on \"主机001\".",
+    "debug": [
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 1029,
+        "function": "exception",
+        "class": "CZBXAPI",
+        "type": "::",
+        "args": [
+          100,
+          "Interface is linked to item \"正运行的allmoni_agentd的主机名\" on \"主机001\"."
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 948,
+        "function": "checkIfInterfaceHasItems",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 663,
+        "function": "checkMainInterfacesOnDelete",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHostInterface.php",
+        "line": 796,
+        "function": "delete",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          [
+            "884"
+          ]
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/classes/CHost.php",
+        "line": 1547,
+        "function": "replaceHostInterfaces",
+        "class": "CHostInterface",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970"
+          }
+        ]
+      },
+      {
+        "function": "update",
+        "class": "CHost",
+        "type": "->",
+        "args": [
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 120,
+        "function": "call_user_func",
+        "args": [
+          [
+            {},
+            "update"
+          ],
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.czbxrpc.php",
+        "line": 72,
+        "function": "callAPI",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970"
+          }
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api/rpc/class.cjsonrpc.php",
+        "line": 71,
+        "function": "call",
+        "class": "czbxrpc",
+        "type": "::",
+        "args": [
+          "host.update",
+          {
+            "interfaces": [
+              {
+                "dns": "",
+                "ip": "192.168.0.1",
+                "main": 1,
+                "port": "8050",
+                "type": 1,
+                "useip": 1
+              }
+            ],
+            "hostid": "10970"
+          },
+          "b40923f1a38676a9f48616af6de885ec"
+        ]
+      },
+      {
+        "file": "/var/www/allmoni/api_jsonrpc.php",
+        "line": 54,
+        "function": "execute",
+        "class": "CJSONrpc",
+        "type": "->",
+        "args": []
+      }
+    ]
+  },
+  "id": 1
+}
+
+[ERROR] [2014-03-31 17:55:40,646] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-1] [175733]
+Interface is linked to item "正运行的allmoni_agentd的主机名" on "主机001".
+
+com.skycloud.jkb.base.ex.ServiceRuntimeException: Interface is linked to item "正运行的allmoni_agentd的主机名" on "主机001".
+	at com.skycloud.jkb.base.impl.BaseServiceImpl.throwRuntimeExceptionWhenTrue(BaseServiceImpl.java:94)
+	at com.skycloud.jkb.service.impl.ServerServiceImpl.update(ServerServiceImpl.java:370)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy63.update(Unknown Source)
+	at com.skycloud.jkb.controller.ServerController.update(ServerController.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:838)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:641)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:310)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+[INFO] [2014-03-31 18:03:14,532] [org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean] [localhost-startStop-1] [0]
+Building new Hibernate SessionFactory
+
+[INFO] [2014-03-31 18:03:27,377] [org.springframework.orm.hibernate3.HibernateTransactionManager] [localhost-startStop-1] [12845]
+Using DataSource [org.apache.commons.dbcp.BasicDataSource@4a7ba14a] of Hibernate SessionFactory for HibernateTransactionManager
+
+[DEBUG] [2014-03-31 18:04:09,773] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-8] [55241]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:09,966] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-8] [55434]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:04:10,277] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-8] [55745]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "3683b05cbb8cb4a2ff2edd4f8756769e",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:10,349] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-8] [55817]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 18:04:10,425] [com.skycloud.jkb.controller.AlarmController] [http-bio-8080-exec-8] [55893]
+查询【告警】
+
+[DEBUG] [2014-03-31 18:04:10,477] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-8] [55945]
+请求参数对象[getParam]:
+{
+  "startTime": "2010/01/01 00:00:00",
+  "endTime": "2014/02/28 23:59:00",
+  "monitoringType": "agent",
+  "level": "2,3,4,5",
+  "keyword": "All",
+  "description": "Allmoni agent"
+}
+
+[DEBUG] [2014-03-31 18:04:10,541] [com.skycloud.jkb.service.impl.AlarmServiceImpl] [http-bio-8080-exec-8] [56009]
+[业务逻辑层]查询【告警】(分页)
+
+[DEBUG] [2014-03-31 18:04:10,547] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-8] [56015]
+
+    SELECT
+        COUNT(*) 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' 
+
+[DEBUG] [2014-03-31 18:04:10,547] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-8] [56015]
+
+
+[DEBUG] [2014-03-31 18:04:10,578] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-8] [56046]
+获取对象[getObject]单个值: 1
+
+[DEBUG] [2014-03-31 18:04:10,579] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-8] [56047]
+
+    SELECT
+        `triggers`.triggerid,
+        `triggers`.description,
+        `triggers`.priority,
+        `triggers`.lastchange,
+        `triggers`.type,
+        `triggers`.value_flags,
+        `triggers`.flags,
+        `hosts`.`host`,
+        `hosts`.`name`,
+        sg.monitortype 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' LIMIT 0, 50 
+
+[DEBUG] [2014-03-31 18:04:10,580] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-8] [56048]
+
+
+[DEBUG] [2014-03-31 18:04:10,595] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-8] [56063]
+多行[getMapList]数据:
+[
+  {
+    "host": "AllMoniDB",
+    "flags": 0,
+    "triggerid": 23863,
+    "priority": 3,
+    "description": "Allmoni agent失去连接超过5分钟",
+    "monitortype": "agent",
+    "name": "AllMoniDB",
+    "type": 0,
+    "lastchange": 1379831670,
+    "value_flags": 1
+  }
+]
+
+[DEBUG] [2014-03-31 18:04:12,030] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [57498]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "3683b05cbb8cb4a2ff2edd4f8756769e",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:12,043] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [57511]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:04:12,931] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [58399]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "e88ff403df5543fcfd6053b9c9686ab7",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:12,932] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [58400]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 18:04:12,935] [com.skycloud.jkb.controller.AlarmController] [http-bio-8080-exec-10] [58403]
+查询【告警】
+
+[DEBUG] [2014-03-31 18:04:12,936] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [58404]
+请求参数对象[getParam]:
+{
+  "startTime": "2010/01/01 00:00:00",
+  "endTime": "2014/02/28 23:59:00",
+  "monitoringType": "agent",
+  "level": "2,3,4,5",
+  "keyword": "All",
+  "description": "Allmoni agent"
+}
+
+[DEBUG] [2014-03-31 18:04:12,939] [com.skycloud.jkb.service.impl.AlarmServiceImpl] [http-bio-8080-exec-10] [58407]
+[业务逻辑层]查询【告警】(分页)
+
+[DEBUG] [2014-03-31 18:04:12,943] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [58411]
+
+    SELECT
+        COUNT(*) 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' 
+
+[DEBUG] [2014-03-31 18:04:12,943] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [58411]
+
+
+[DEBUG] [2014-03-31 18:04:12,952] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [58420]
+获取对象[getObject]单个值: 1
+
+[DEBUG] [2014-03-31 18:04:12,956] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [58424]
+
+    SELECT
+        `triggers`.triggerid,
+        `triggers`.description,
+        `triggers`.priority,
+        `triggers`.lastchange,
+        `triggers`.type,
+        `triggers`.value_flags,
+        `triggers`.flags,
+        `hosts`.`host`,
+        `hosts`.`name`,
+        sg.monitortype 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' LIMIT 0, 50 
+
+[DEBUG] [2014-03-31 18:04:12,956] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [58424]
+
+
+[DEBUG] [2014-03-31 18:04:12,973] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [58441]
+多行[getMapList]数据:
+[
+  {
+    "host": "AllMoniDB",
+    "flags": 0,
+    "triggerid": 23863,
+    "priority": 3,
+    "description": "Allmoni agent失去连接超过5分钟",
+    "monitortype": "agent",
+    "name": "AllMoniDB",
+    "type": 0,
+    "lastchange": 1379831670,
+    "value_flags": 1
+  }
+]
+
+[DEBUG] [2014-03-31 18:04:15,658] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [61126]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "e88ff403df5543fcfd6053b9c9686ab7",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:15,668] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [61136]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:04:15,980] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [61448]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "ac20edb597bce8b0700c6e99e5c27e05",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:15,980] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [61448]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 18:04:15,983] [com.skycloud.jkb.controller.AlarmController] [http-bio-8080-exec-10] [61451]
+查询【告警】
+
+[DEBUG] [2014-03-31 18:04:15,983] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [61451]
+请求参数对象[getParam]:
+{
+  "startTime": "2010/01/01 00:00:00",
+  "endTime": "2014/02/28 23:59:00",
+  "monitoringType": "agent",
+  "level": "2,3,4,5",
+  "keyword": "All",
+  "description": "Allmoni agent"
+}
+
+[DEBUG] [2014-03-31 18:04:15,987] [com.skycloud.jkb.service.impl.AlarmServiceImpl] [http-bio-8080-exec-10] [61455]
+[业务逻辑层]查询【告警】(分页)
+
+[DEBUG] [2014-03-31 18:04:15,991] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [61459]
+
+    SELECT
+        COUNT(*) 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' 
+
+[DEBUG] [2014-03-31 18:04:15,991] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [61459]
+
+
+[DEBUG] [2014-03-31 18:04:16,000] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [61468]
+获取对象[getObject]单个值: 1
+
+[DEBUG] [2014-03-31 18:04:16,004] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [61472]
+
+    SELECT
+        `triggers`.triggerid,
+        `triggers`.description,
+        `triggers`.priority,
+        `triggers`.lastchange,
+        `triggers`.type,
+        `triggers`.value_flags,
+        `triggers`.flags,
+        `hosts`.`host`,
+        `hosts`.`name`,
+        sg.monitortype 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' LIMIT 0, 50 
+
+[DEBUG] [2014-03-31 18:04:16,005] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [61473]
+
+
+[DEBUG] [2014-03-31 18:04:16,012] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [61480]
+多行[getMapList]数据:
+[
+  {
+    "host": "AllMoniDB",
+    "flags": 0,
+    "triggerid": 23863,
+    "priority": 3,
+    "description": "Allmoni agent失去连接超过5分钟",
+    "monitortype": "agent",
+    "name": "AllMoniDB",
+    "type": 0,
+    "lastchange": 1379831670,
+    "value_flags": 1
+  }
+]
+
+[DEBUG] [2014-03-31 18:04:18,013] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [63481]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "ac20edb597bce8b0700c6e99e5c27e05",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:18,017] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [63485]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:04:18,309] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-10] [63777]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "f97ca33daf4c99cc606a3cec3b51556e",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:04:18,310] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [63778]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 18:04:18,312] [com.skycloud.jkb.controller.AlarmController] [http-bio-8080-exec-10] [63780]
+查询【告警】
+
+[DEBUG] [2014-03-31 18:04:18,313] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-10] [63781]
+请求参数对象[getParam]:
+{
+  "startTime": "2010/01/01 00:00:00",
+  "endTime": "2014/02/28 23:59:00",
+  "monitoringType": "agent",
+  "level": "2,3,4,5",
+  "keyword": "All",
+  "description": "Allmoni agent"
+}
+
+[DEBUG] [2014-03-31 18:04:18,317] [com.skycloud.jkb.service.impl.AlarmServiceImpl] [http-bio-8080-exec-10] [63785]
+[业务逻辑层]查询【告警】(分页)
+
+[DEBUG] [2014-03-31 18:04:18,321] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [63789]
+
+    SELECT
+        COUNT(*) 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' 
+
+[DEBUG] [2014-03-31 18:04:18,321] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [63789]
+
+
+[DEBUG] [2014-03-31 18:04:18,340] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [63808]
+获取对象[getObject]单个值: 1
+
+[DEBUG] [2014-03-31 18:04:18,344] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [63812]
+
+    SELECT
+        `triggers`.triggerid,
+        `triggers`.description,
+        `triggers`.priority,
+        `triggers`.lastchange,
+        `triggers`.type,
+        `triggers`.value_flags,
+        `triggers`.flags,
+        `hosts`.`host`,
+        `hosts`.`name`,
+        sg.monitortype 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' LIMIT 0, 50 
+
+[DEBUG] [2014-03-31 18:04:18,344] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [63812]
+
+
+[DEBUG] [2014-03-31 18:04:18,356] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-10] [63824]
+多行[getMapList]数据:
+[
+  {
+    "host": "AllMoniDB",
+    "flags": 0,
+    "triggerid": 23863,
+    "priority": 3,
+    "description": "Allmoni agent失去连接超过5分钟",
+    "monitortype": "agent",
+    "name": "AllMoniDB",
+    "type": 0,
+    "lastchange": 1379831670,
+    "value_flags": 1
+  }
+]
+
+[DEBUG] [2014-03-31 18:07:35,224] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [260692]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "f97ca33daf4c99cc606a3cec3b51556e",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:07:35,234] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [260702]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:07:35,557] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [261025]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "0c2d92aaac5d4043dba2bd5591fefa66",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:07:35,558] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [261026]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 18:07:35,560] [com.skycloud.jkb.controller.AlarmController] [http-bio-8080-exec-2] [261028]
+查询【告警】
+
+[DEBUG] [2014-03-31 18:07:35,561] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [261029]
+请求参数对象[getParam]:
+{
+  "startTime": "2010/01/01 00:00:00",
+  "endTime": "2014/02/28 23:59:00",
+  "monitoringType": "agent",
+  "level": "2,3,4,5",
+  "keyword": "All",
+  "description": "Allmoni agent"
+}
+
+[DEBUG] [2014-03-31 18:07:35,612] [com.skycloud.jkb.service.impl.AlarmServiceImpl] [http-bio-8080-exec-2] [261080]
+[业务逻辑层]查询【告警】(分页)
+
+[DEBUG] [2014-03-31 18:07:35,615] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-2] [261083]
+
+    SELECT
+        COUNT(*) 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' 
+
+[DEBUG] [2014-03-31 18:07:35,615] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-2] [261083]
+
+
+[DEBUG] [2014-03-31 18:07:35,648] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-2] [261116]
+获取对象[getObject]单个值: 1
+
+[DEBUG] [2014-03-31 18:07:35,651] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-2] [261119]
+
+    SELECT
+        `triggers`.triggerid,
+        `triggers`.description,
+        `triggers`.priority,
+        `triggers`.lastchange,
+        `triggers`.type,
+        `triggers`.value_flags,
+        `triggers`.flags,
+        `hosts`.`host`,
+        `hosts`.`name`,
+        sg.monitortype 
+    FROM
+        `triggers` 
+    INNER JOIN
+        functions 
+            ON `triggers`.triggerid = functions.triggerid 
+    INNER JOIN
+        items 
+            ON items.itemid = functions.itemid 
+    INNER JOIN
+        `hosts` 
+            ON `hosts`.hostid = items.hostid 
+    INNER JOIN
+        skycloud_groupstype_host AS sgh 
+            ON sgh.hostid = `hosts`.hostid 
+    INNER JOIN
+        skycloud_grouptype AS sg 
+            ON sg.typeid = sgh.typeid 
+    WHERE
+        `triggers`.`value` = 1 
+        AND sg.monitortype = 'agent' 
+        AND `triggers`.lastchange >= 1262275200 
+        AND `triggers`.lastchange <= 1393603140 
+        AND `triggers`.priority IN (
+            2,3,4,5
+        ) 
+        AND `hosts`.`name` LIKE '%All%' 
+        AND `triggers`.description LIKE '%Allmoni agent%' LIMIT 0, 50 
+
+[DEBUG] [2014-03-31 18:07:35,651] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-2] [261119]
+
+
+[DEBUG] [2014-03-31 18:07:35,718] [com.skycloud.jkb.base.impl.BaseDaoImpl] [http-bio-8080-exec-2] [261186]
+多行[getMapList]数据:
+[
+  {
+    "host": "AllMoniDB",
+    "flags": 0,
+    "triggerid": 23863,
+    "priority": 3,
+    "description": "Allmoni agent失去连接超过5分钟",
+    "monitortype": "agent",
+    "name": "AllMoniDB",
+    "type": 0,
+    "lastchange": 1379831670,
+    "value_flags": 1
+  }
+]
+
+[DEBUG] [2014-03-31 18:21:22,239] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1087707]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "0c2d92aaac5d4043dba2bd5591fefa66",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:21:22,250] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1087718]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:21:22,630] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1088098]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "fd8a3e1be2c59423e07d17cec00d805a",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:21:22,635] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [1088103]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 18:21:22,638] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-2] [1088106]
+更新【服务器】
+
+[DEBUG] [2014-03-31 18:21:22,757] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [1088225]
+请求参数对象[getParam]:
+{
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机003",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 18:21:22,762] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-2] [1088230]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 18:21:23,026] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-2] [1088494]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 18:21:23,036] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1088504]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "hostid": "10970",
+    "host": "chazuo_1",
+    "name": "主机003"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "fd8a3e1be2c59423e07d17cec00d805a",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:21:23,040] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1088508]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:21:23,358] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1088826]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "hostids": [
+      "10970"
+    ]
+  },
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:21:44,954] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1110422]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "password": "skycloud",
+    "user": "admin"
+  },
+  "jsonrpc": "2.0",
+  "method": "user.login",
+  "auth": "fd8a3e1be2c59423e07d17cec00d805a",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:21:44,965] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1110433]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:21:45,191] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1110659]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": "1d60ed917478ded1dff28573b0aa9f20",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:21:45,192] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [1110660]
+<<请求参数[request params]>>
+
+
+[DEBUG] [2014-03-31 18:21:45,194] [com.skycloud.jkb.controller.ServerController] [http-bio-8080-exec-2] [1110662]
+更新【服务器】
+
+[DEBUG] [2014-03-31 18:21:45,196] [com.skycloud.jkb.base.BaseController] [http-bio-8080-exec-2] [1110664]
+请求参数对象[getParam]:
+{
+  "typeId": "21",
+  "id": "1",
+  "disableUntil": 0,
+  "available": 0,
+  "errorsFrom": 0,
+  "lastaccess": 0,
+  "ipmiAuthtype": 0,
+  "ipmiPrivilege": 0,
+  "ipmiDisableUntil": 0,
+  "ipmiAvailable": 0,
+  "snmpDisableUntil": 0,
+  "snmpAvailable": 0,
+  "maintenanceStatus": 0,
+  "maintenanceType": 0,
+  "maintenanceFrom": 0,
+  "ipmiErrorsFrom": 0,
+  "snmpErrorsFrom": 0,
+  "jmxDisableUntil": 0,
+  "jmxAvailable": 0,
+  "jmxErrorsFrom": 0,
+  "name": "主机001",
+  "maintenancesHostses": [],
+  "screenses": [],
+  "opcommandHsts": [],
+  "hostsTemplatesesForHostid": [],
+  "hostsTemplatesesForTemplateid": [],
+  "druleses": [],
+  "hostmacros": [],
+  "optemplates": [],
+  "applicationses": [],
+  "itemses": [],
+  "autoregHosts": [],
+  "interfaceses": [],
+  "hostsGroupses": [],
+  "hostses": []
+}
+
+[DEBUG] [2014-03-31 18:21:45,221] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-2] [1110689]
+[业务逻辑层]获取【服务器】
+
+[DEBUG] [2014-03-31 18:21:45,293] [com.skycloud.jkb.service.impl.ServerServiceImpl] [http-bio-8080-exec-2] [1110761]
+[业务逻辑层]更新【服务器】
+
+[DEBUG] [2014-03-31 18:21:45,294] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1110762]
+[invokeAPI jsonParams] 
+{
+  "params": {
+    "hostid": "10970",
+    "host": "chazuo_1",
+    "name": "主机001"
+  },
+  "jsonrpc": "2.0",
+  "method": "host.update",
+  "auth": "1d60ed917478ded1dff28573b0aa9f20",
+  "id": 1
+}
+
+[DEBUG] [2014-03-31 18:21:45,305] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1110773]
+http://192.168.35.77/allmoniapi/api_jsonrpc.php
+
+[DEBUG] [2014-03-31 18:21:45,524] [com.skycloud.jkb.component.ApiInvoker] [http-bio-8080-exec-2] [1110992]
+[invokeAPI jsonResult] 
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "hostids": [
+      "10970"
+    ]
+  },
+  "id": 1
+}
+
